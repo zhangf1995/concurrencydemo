@@ -1,0 +1,92 @@
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pom.xml	(revision d3470a158503836794cf2ef80fdb83969dd094e9)
++++ pom.xml	(revision )
+@@ -23,7 +23,10 @@
+ 			<groupId>org.springframework.boot</groupId>
+ 			<artifactId>spring-boot-starter</artifactId>
+ 		</dependency>
+-
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-starter-web</artifactId>
++		</dependency>
+ 		<dependency>
+ 			<groupId>org.springframework.boot</groupId>
+ 			<artifactId>spring-boot-starter-test</artifactId>
+Index: src/main/resources/application.properties
+===================================================================
+--- src/main/resources/application.properties	(revision d3470a158503836794cf2ef80fdb83969dd094e9)
++++ src/main/resources/application.properties	(revision d3470a158503836794cf2ef80fdb83969dd094e9)
+@@ -1,1 +0,0 @@
+-
+Index: src/main/java/com/study/concurrency/concurrencydemo/ConcurrencyTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/study/concurrency/concurrencydemo/ConcurrencyTest.java	(revision )
++++ src/main/java/com/study/concurrency/concurrencydemo/ConcurrencyTest.java	(revision )
+@@ -0,0 +1,47 @@
++package com.study.concurrency.concurrencydemo;
++
++import org.springframework.web.bind.annotation.RequestMapping;
++import org.springframework.web.bind.annotation.RestController;
++
++import java.util.concurrent.CountDownLatch;
++import java.util.concurrent.Executor;
++
++/**
++ * @program: concurrencydemo
++ * @description: 并发测试CountDownLatch类
++ * @author: zf
++ * @create: 2019-03-22 09:58
++ **/
++
++public class ConcurrencyTest {
++    public static void main(String[] args) {
++        CountDownLatch begin = new CountDownLatch(1);
++        CountDownLatch end = new CountDownLatch(5);
++        for (int a = 0; a < 5; a++) {
++            new Thread(new Runnable() {
++                @Override
++                public void run() {
++                    try {
++                        begin.await();
++                        System.out.println(Thread.currentThread().getName() + "开始起跑");
++                        Thread.sleep(1000);
++                        System.out.println(Thread.currentThread().getName()+"到达终点");
++                        end.countDown();
++                    } catch (InterruptedException e) {
++                        e.printStackTrace();
++                    }
++                }
++            }).start();
++        }
++        try {
++            System.out.println("还有一秒钟开始比赛");
++            Thread.sleep(1000);
++            System.out.println("比赛开始");
++            begin.countDown();
++            end.await();
++            System.out.println("比赛结束");
++        } catch (InterruptedException e) {
++            e.printStackTrace();
++        }
++    }
++}
+Index: src/main/resources/application.yml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/application.yml	(revision )
++++ src/main/resources/application.yml	(revision )
+@@ -0,0 +1,3 @@
++
++server:
++  port: 8080
+\ No newline at end of file
