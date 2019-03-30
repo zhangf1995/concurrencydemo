@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
  **/
 public class ConcurrencyTest1 {
     public static void main(String[] args) {
-        //test1();
+        test1();
         //test2();
     }
 
@@ -22,10 +22,10 @@ public class ConcurrencyTest1 {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(1000);
+                        //Thread.sleep(1000);
                         System.out.println(Thread.currentThread().getName());
 
-                    } catch (InterruptedException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }

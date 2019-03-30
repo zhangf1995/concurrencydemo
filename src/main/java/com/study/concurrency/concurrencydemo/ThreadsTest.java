@@ -6,6 +6,7 @@ package com.study.concurrency.concurrencydemo;
  * @author: zf
  * @create: 2019-03-28 11:47
  **/
+
 public class ThreadsTest implements Runnable {
     private int tickets = 1;
 
